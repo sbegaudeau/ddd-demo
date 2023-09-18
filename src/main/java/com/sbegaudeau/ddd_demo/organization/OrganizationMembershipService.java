@@ -1,6 +1,7 @@
 package com.sbegaudeau.ddd_demo.organization;
 
 import com.sbegaudeau.ddd_demo.account.IAccountRepository;
+import com.sbegaudeau.ddd_demo.notification.NotificationCreationService;
 
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -15,9 +16,12 @@ public class OrganizationMembershipService {
 
     private final IOrganizationRepository organizationRepository;
 
-    public OrganizationMembershipService(IAccountRepository accountRepository, IOrganizationRepository organizationRepository) {
+    private final NotificationCreationService notificationCreationService;
+
+    public OrganizationMembershipService(IAccountRepository accountRepository, IOrganizationRepository organizationRepository, NotificationCreationService notificationCreationService) {
         this.accountRepository = accountRepository;
         this.organizationRepository = organizationRepository;
+        this.notificationCreationService = notificationCreationService;
     }
 
     @Transactional
@@ -28,5 +32,9 @@ public class OrganizationMembershipService {
         var membership = new Membership(account.getId(), role);
         organization.getMemberships().add(membership);
         this.organizationRepository.save(organization);
+
+        organization.getMemberships().stream()
+                .filter(m -> m.role().equals("admin"))
+                .forEach(m -> notificationCreationService.createNotification(m.accountId(), "The account " + username + " has been added to the organization"));
     }
 }
