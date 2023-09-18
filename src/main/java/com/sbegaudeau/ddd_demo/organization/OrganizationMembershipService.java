@@ -5,6 +5,7 @@ import com.sbegaudeau.ddd_demo.account.IAccountRepository;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +26,7 @@ public class OrganizationMembershipService {
         var account = this.accountRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("Account not found"));
         var organization = this.organizationRepository.findById(organizationId).orElseThrow(() -> new NoSuchElementException("Organization not found"));
 
-        var membership = new Membership(account.getId(), role);
-        organization.getMemberships().add(membership);
+        organization.inviteMember(AggregateReference.to(account.getId()), role);
         this.organizationRepository.save(organization);
     }
 }

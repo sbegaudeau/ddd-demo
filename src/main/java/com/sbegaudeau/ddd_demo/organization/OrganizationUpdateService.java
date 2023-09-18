@@ -17,9 +17,7 @@ public class OrganizationUpdateService {
     @Transactional
     public void renameOrganization(UUID organizationId, String newName) {
         var organization = this.organizationRepository.findById(organizationId).orElseThrow(() -> new NoSuchElementException("Organization not found"));
-        organization.setName(newName);
+        organization.updateName(newName);
         this.organizationRepository.save(organization);
-
-        // Track changes and notify all members...
     }
 }
