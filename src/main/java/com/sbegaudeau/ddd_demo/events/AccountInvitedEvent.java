@@ -7,8 +7,8 @@ import java.util.UUID;
 
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
-public record AccountInvitedEvent(
+public record AccountInvitedEvent (
         AggregateReference<Organization, UUID> organization,
         AggregateReference<Account, UUID> account
-) {
+) implements IDomainEvent {
 }

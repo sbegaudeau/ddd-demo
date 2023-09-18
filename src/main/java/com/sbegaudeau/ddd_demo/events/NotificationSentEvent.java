@@ -9,5 +9,5 @@ import org.springframework.data.jdbc.core.mapping.AggregateReference;
 public record NotificationSentEvent(
         AggregateReference<Account, UUID> account,
         String body
-) {
+) implements IDomainEvent  {
 }

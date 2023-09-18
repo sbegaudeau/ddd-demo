@@ -8,5 +8,5 @@ import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
 public record OrganizationUpdatedEvent(
         AggregateReference<Organization, UUID> organization
-) {
+) implements IDomainEvent {
 }
