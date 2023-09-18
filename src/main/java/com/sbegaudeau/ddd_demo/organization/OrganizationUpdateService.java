@@ -19,5 +19,7 @@ public class OrganizationUpdateService {
         var organization = this.organizationRepository.findById(organizationId).orElseThrow(() -> new NoSuchElementException("Organization not found"));
         organization.setName(newName);
         this.organizationRepository.save(organization);
+
+        // Track changes and notify all members...
     }
 }
