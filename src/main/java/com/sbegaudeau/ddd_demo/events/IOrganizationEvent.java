@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
-public record OrganizationUpdatedEvent(
-        AggregateReference<Organization, UUID> organization
-) implements IOrganizationEvent {
+public interface IOrganizationEvent extends IDomainEvent {
+    AggregateReference<Organization, UUID> organization();
 }

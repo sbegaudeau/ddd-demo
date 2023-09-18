@@ -10,5 +10,5 @@ import org.springframework.data.jdbc.core.mapping.AggregateReference;
 public record AccountInvitedEvent (
         AggregateReference<Organization, UUID> organization,
         AggregateReference<Account, UUID> account
-) implements IDomainEvent {
+) implements IOrganizationEvent {
 }

@@ -25,6 +25,8 @@ public class Organization extends AbstractAggregateRoot<Organization> {
 
     private List<Membership> memberships = new ArrayList<>();
 
+    private List<Webhook> webhooks = new ArrayList<>();
+
     public void setId(UUID id) {
         this.id = id;
     }
@@ -39,6 +41,10 @@ public class Organization extends AbstractAggregateRoot<Organization> {
 
     public List<Membership> getMemberships() {
         return Collections.unmodifiableList(memberships);
+    }
+
+    public List<Webhook> getWebhooks() {
+        return Collections.unmodifiableList(webhooks);
     }
 
     public void updateName(String newName) {
